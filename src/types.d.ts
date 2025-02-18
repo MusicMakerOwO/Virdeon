@@ -1,5 +1,5 @@
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from "@discordjs/builders";
-import { Bot, Interaction, InteractionCallbackData, InteractionResponseTypes } from "discordeno";
+import { Bot, Interaction, InteractionCallbackData, InteractionResponseTypes, Message } from "discordeno";
 
 type ComponentResponse = string | InteractionCallbackData & { hidden?: boolean };
 
@@ -31,6 +31,13 @@ export interface CommandFile {
 	// interaction, client
 	// order does not matter
 	execute: ComponentCallback<Client, Interaction>;
+}
+
+export interface MessageFile {
+	name: string;
+	description?: string;
+	locks?: Partial<ComponentLocks>;
+	execute: ComponentCallback<Client, Message, string[]>;
 }
 
 export interface EventFile {
