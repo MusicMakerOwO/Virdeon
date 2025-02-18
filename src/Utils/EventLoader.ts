@@ -91,11 +91,11 @@ function EventHandler(client: Bot, event: string, ...args: any[]) {
 	RunNamedParams(Events[event], argsObj);
 }
 
-export default function (client: Bot) {
+export default function (folder: string, client: Bot) {
 
 	const EventCallback = EventHandler.bind(null, client);
 
-	const EventFiles = ReadFolder(`${__dirname}/../Events`);
+	const EventFiles = ReadFolder(`${__dirname}/../${folder}`);
 	for (let i = 0; i < EventFiles.length; i++) {
 		const file = EventFiles[i];
 		if (!file.endsWith('.js')) continue;
