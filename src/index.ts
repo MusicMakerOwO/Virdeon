@@ -2,7 +2,7 @@ import { createBot } from "discordeno";
 import config from "./Utils/Config";
 import EventLoader from "./Utils/EventLoader";
 import { Client } from "./types";
-import CommandLoader from "./Utils/CommandLoader";
+import ComponentLoader from "./Utils/ComponentLoader";
 
 console.time('Startup');
 
@@ -28,9 +28,10 @@ client.buttons = new Map();
 client.selects = new Map();
 client.modals = new Map();
 
-EventLoader(client);
-CommandLoader(client);
-
-console.log(client.commands);
+EventLoader('./Events', client);
+ComponentLoader('Command', './Commands', client.commands);
+ComponentLoader('Button', './Buttons', client.buttons);
+ComponentLoader('Select', './Selects', client.selects);
+ComponentLoader('Modal', './Modals', client.modals);
 
 client.start();
