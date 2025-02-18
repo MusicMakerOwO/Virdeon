@@ -1,0 +1,23 @@
+{
+  "name": "vireon",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -b",
+    "start": "node build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@discordeno/types": "^21.0.0",
+    "@discordjs/builders": "^1.10.1",
+    "discordeno": "^21.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4"
+  }
+}
