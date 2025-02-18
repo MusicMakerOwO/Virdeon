@@ -36,15 +36,15 @@ export default {
 				break;
 			case InteractionTypes.MessageComponent: // Button or Select Menu
 				if (interaction.data!.componentType === MessageComponentTypes.Button) {
-					console.log(`${interaction.user.username} : [${interaction.data!.customId}]`);
+					Log('INFO', `${interaction.user.username} : [${interaction.data!.customId}]`);
 					cache = client.buttons;
 				} else if (interaction.data!.componentType === MessageComponentTypes.SelectMenu) {
-					console.log(`${interaction.user.username} : <${interaction.data!.customId}>`);
+					Log('INFO', `${interaction.user.username} : <${interaction.data!.customId}>`);
 					cache = client.selects;
 				}
 				break;
 			case InteractionTypes.ModalSubmit:
-				console.log(`${interaction.user.username} : {${interaction.data!.values}}`);
+				Log('INFO', `${interaction.user.username} : {${interaction.data!.values}}`);
 				cache = client.modals;
 				break
 		}
@@ -52,8 +52,6 @@ export default {
 
 		const args = interaction.data!.customId?.split('_') ?? [];
 		const name = args.shift() ?? interaction.data!.name;
-
-		console.log(name, args);
 
 		const namedArgs = {
 			'args': args,
