@@ -1,9 +1,9 @@
 import ReadFolder from "./ReadFolder";
-import { CommandFile, ComponentFile } from "../types";
+import { CommandFile, ComponentFile, MessageFile } from "../types";
 import Log from "./Logs";
 import { existsSync } from "fs";
 
-export default function (type: string, folder: string, cache: Map<string, CommandFile | ComponentFile>) {
+export default function (type: string, folder: string, cache: Map<string, CommandFile | ComponentFile | MessageFile>) {
 
 	if (!existsSync(`${__dirname}/../${folder}`)) {
 		Log('ERROR', `Folder ${folder} does not exist`);
@@ -13,20 +13,31 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 	const files = ReadFolder(`${__dirname}/../${folder}`);
 	for (const file of files) {
 		if (!file.endsWith('.js')) continue;
-		let command = require(file) as CommandFile | ComponentFile;
-
-		if (typeof command.default === 'object') {
-			command = command.default;
-		}
+		let component = require(file) as CommandFile | ComponentFile | MessageFile;
+		// @ts-ignore
+		if (component.default !== undefined) component = component.default;
 
 		try {
-			if ('command' in command) {
-				const commandPayload = command.command.toJSON();
-				cache.set(commandPayload.name, command);
+			if (typeof component !== 'object') throw 'Component must be an object';
+
+			// shared properties
+			if (typeof component.locks !== 'object') component.locks = {};
+			if (typeof component.execute !== 'function') throw 'Component must have an execute function';
+
+			if ('command' in component) {
+				if (typeof component.command !== 'object') throw 'Command must be an object';
+				if (cache.has(component.command.name)) throw `Duplicate command name "${component.command.name}"`;
+				cache.set(component.command.name, component);
+			} else if ('name' in component) {
+				if (typeof component.name !== 'string') throw 'Component must have a name';
+				if (component.description !== undefined && typeof component.description !== 'string') throw 'Description must be a string';
+				if (cache.has(component.name)) throw `Duplicate name "${component.name}"`;
+				cache.set(component.name, component);
 			} else {
-				const customID = command.customID ?? command.customId ?? command.custom_id ?? file.split('/').pop()!.split('.').shift()!;
-				if (!customID) throw 'Component must have a customID';
-				cache.set(customID, command);
+				const id = component.customID ?? component.customId ?? component.custom_id;
+				if (typeof id !== 'string') throw 'Component must have a customID';
+				if (cache.has(id)) throw `Duplicate customID "${id}"`;
+				cache.set(id, component);
 			}
 		} catch (error) {
 			Log('ERROR', `Error loading ${type} from ${file}: ${error}`);
