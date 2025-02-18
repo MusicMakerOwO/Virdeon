@@ -1,11 +1,10 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
-import { Interaction } from "discordeno";
 
 export const command = new SlashCommandBuilder()
 	.setName("clicker")
 	.setDescription("Clicker game i guess lol");
 
-export default async function (interaction: Interaction) {
+export async function execute () {
 	const button = {
 		type: 1,
 		components: [

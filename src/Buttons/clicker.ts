@@ -1,5 +1,6 @@
-import { Interaction } from "discordeno";
-
-export default async function (interaction: Interaction) {
-	return 'Click!';
+export default {
+	custom_id: 'clicker',
+	async execute() {
+		return 'You clicked the button!';
+	}
 }
