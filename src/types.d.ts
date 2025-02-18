@@ -50,4 +50,5 @@ export interface Client extends Bot {
 	buttons: Map<string, ComponentFile>;
 	selects: Map<string, ComponentFile>;
 	modals: Map<string, ComponentFile>;
+	prefix: Map<string, MessageFile>;
 }

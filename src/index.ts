@@ -27,11 +27,13 @@ client.commands = new Map();
 client.buttons = new Map();
 client.selects = new Map();
 client.modals = new Map();
+client.prefix = new Map();
 
 EventLoader('./Events', client);
 ComponentLoader('Command', './Commands', client.commands);
 ComponentLoader('Button', './Buttons', client.buttons);
 ComponentLoader('Select', './Selects', client.selects);
 ComponentLoader('Modal', './Modals', client.modals);
+ComponentLoader('Prefix', './Prefix', client.prefix);
 
 client.start();
