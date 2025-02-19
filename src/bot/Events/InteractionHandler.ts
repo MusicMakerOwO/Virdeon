@@ -1,6 +1,6 @@
 import { InteractionTypes, MessageComponentTypes, type Interaction } from "discordeno";
-import { Client, CommandFile, ComponentFile, EventFile } from "../types";
-import Log from "../Utils/Logs";
+import { Client, CommandFile, ComponentFile, EventFile } from "../../types";
+import Log from "../../GlobalUtils/Logs";
 import RunNamedParams from "../Utils/RunNamedParams";
 
 async function RunComponent(component: CommandFile | ComponentFile, namedArgs: Record<string, any>) {

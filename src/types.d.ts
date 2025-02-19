@@ -1,5 +1,5 @@
 import { ContextMenuCommandBuilder, SlashCommandBuilder } from "@discordjs/builders";
-import { Bot, Interaction, InteractionCallbackData, InteractionResponseTypes, Message } from "discordeno";
+import { Bot, Interaction, InteractionCallbackData, Message } from "discordeno";
 
 type ComponentResponse = string | InteractionCallbackData & { hidden?: boolean };
 

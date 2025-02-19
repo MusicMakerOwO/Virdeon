@@ -1,14 +1,16 @@
 type Config = {
 	TOKEN: string,
-	APP_ID: string
+	APP_ID: string,
+	PREFIX: string
 }
 
 const ConfigTemplate : Record<string, string> = {
 	TOKEN: 'string',
-	APP_ID: 'string'
+	APP_ID: 'string',
+	PREFIX: 'string'
 }
 
-const config = require('../../config.json');
+const config = require('../config.json');
 
 for (const [key, type] of Object.entries(ConfigTemplate)) {
 	if (typeof config[key] !== type) {

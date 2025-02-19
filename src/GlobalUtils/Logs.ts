@@ -45,6 +45,7 @@ export function GetTimestamp() {
 	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
+// Log.info('Hello, world!'); -> [INFO] 2021-08-01 12:00:00 : Hello, world!
 export default function Log(type: keyof typeof LOG_TYPE, message: any) {
 	const logType = '[' + type.toUpperCase() + ']'.padEnd(LONGEST_LOG_TYPE + 1 - type.length);
 	const isError = type === LOG_TYPE.ERROR;
@@ -53,6 +54,3 @@ export default function Log(type: keyof typeof LOG_TYPE, message: any) {
 	const messageString = typeof message === 'string' ? message : inspect(message, { depth: 3, colors: !isError });
 	console.log(`${color}${logType} ${timestamp} : ${!isError ? COLOR.RESET : ''}${messageString}${COLOR.RESET}`);
 }
-
-// Log.info('Hello, world!'); -> [INFO] 2021-08-01 12:00:00 : Hello, world!
-

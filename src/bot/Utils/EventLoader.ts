@@ -1,6 +1,6 @@
 import { Bot } from "discordeno";
-import ReadFolder from "./ReadFolder";
-import { EventFile } from "../types";
+import ReadFolder from "../../GlobalUtils/ReadFolder";
+import { EventFile } from "../../types";
 import RunNamedParams from "./RunNamedParams";
 
 const EventArgs: Record<string, string[]> = {

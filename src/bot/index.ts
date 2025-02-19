@@ -1,13 +1,15 @@
-import { createBot } from "discordeno";
-import config from "./Utils/Config";
-import EventLoader from "./Utils/EventLoader";
-import { Client } from "./types";
-import ComponentLoader from "./Utils/ComponentLoader";
+// Converts all runtime errors to point to original typescript files
+import 'source-map-support/register';
 
-console.time('Startup');
+import { createBot, Intents } from "discordeno";
+import EventLoader from "./Utils/EventLoader";
+import ComponentLoader from "./Utils/ComponentLoader";
+import config from "../Config";
+import { Client } from "../types";
 
 const client = createBot({
 	token: config.TOKEN,
+	intents: Intents.Guilds | Intents.GuildMessages,
 	desiredProperties: {
 		interaction: {
 			type: true,

@@ -1,7 +1,7 @@
-import ReadFolder from "./ReadFolder";
-import { CommandFile, ComponentFile, MessageFile } from "../types";
-import Log from "./Logs";
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
+import { CommandFile, ComponentFile, MessageFile } from "../../types";
+import ReadFolder from "../../GlobalUtils/ReadFolder";
+import Log from "../../GlobalUtils/Logs";
 
 export default function (type: string, folder: string, cache: Map<string, CommandFile | ComponentFile | MessageFile>) {
 
