@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -b",
-    "start": "node build/index.js"
+    "build": "rm -rf build && tsc -b",
+    "start": "echo You must specify what to start - ex. start:bot or start:rest",
+    "start:bot": "node build/bot/index.js",
+    "start:rest": "node build/rest/index.js",
+    "start:gateway": "node build/gateway/index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +18,8 @@
   "dependencies": {
     "@discordeno/types": "^21.0.0",
     "@discordjs/builders": "^1.10.1",
-    "discordeno": "^21.0.0"
+    "discordeno": "^21.0.0",
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@types/node": "^22.13.4"
