@@ -1,13 +1,17 @@
 type Config = {
 	TOKEN: string,
 	APP_ID: string,
-	PREFIX: string
+	PREFIX: string,
+	REST_URL: string,
+	REST_PORT: number
 }
 
 const ConfigTemplate : Record<string, string> = {
 	TOKEN: 'string',
 	APP_ID: 'string',
-	PREFIX: 'string'
+	PREFIX: 'string',
+	REST_URL: 'string',
+	REST_PORT: 'number'
 }
 
 const config = require('../config.json');
