@@ -1,26 +1,15 @@
-import fastifyMultipart from "@fastify/multipart"
-import fastify from "fastify"
 import config from "../Config"
 import { createRestManager, RequestMethods } from "discordeno";
 import Log from "../GlobalUtils/Logs";
-import SecureStringTest from "../GlobalUtils/SecureStringTest";
+import { BindTokenCheck, CreateFastifyServer } from "../GlobalUtils/Fastify";
 
 const REST = createRestManager({
 	token: config.TOKEN
 });
 
-const SAMPLE_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXX.XXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+const app = CreateFastifyServer();
 
-const app = fastify({ logger: true })
-
-app.register(fastifyMultipart, { attachFieldsToBody: true })
-
-app.addHook('onRequest', async (request, reply) => {
-	if (!SecureStringTest(request.headers.authorization ?? SAMPLE_TOKEN, config.TOKEN)) {
-		Log('INFO', `Invalid request from ${request.ip}`);
-		reply.status(401).send({ error: 'Unauthorized' });
-	}
-});
+BindTokenCheck(app);
 
 app.get('/uptime', async (request, reply) => {
 	return reply.status(200).send({ uptime: process.uptime() });
@@ -39,8 +28,7 @@ app.all('/api/*', async (request, reply) => {
 		} else {
 			return reply.status(204).send();
 		}
-	} catch (e) {
-		const error = e as Error;
+	} catch (error: Error | any) {
 		Log('ERROR', error.message);
 		return reply.status(500).send({ error: error.message });
 	}
@@ -48,9 +36,4 @@ app.all('/api/*', async (request, reply) => {
 
 app.listen({ port: config.REST_PORT }, () => {
 	console.log(`REST server listening on port ${config.REST_PORT} - ${config.REST_URL}:${config.REST_PORT}`);
-});
-
-process.on('SIGINT', async () => {
-	await app.close();
-	process.exit();
 });
