@@ -28,9 +28,9 @@ app.all('/api/*', async (request, reply) => {
 		} else {
 			return reply.status(204).send();
 		}
-	} catch (error: Error | any) {
-		Log('ERROR', error.message);
-		return reply.status(500).send({ error: error.message });
+	} catch (error) {
+		Log('ERROR', error);
+		return reply.status(500).send({ error: error instanceof Error ? error.message : error });
 	}
 });
 
