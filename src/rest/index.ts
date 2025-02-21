@@ -11,16 +11,20 @@ const app = CreateFastifyServer();
 
 BindTokenCheck(app);
 
-app.get('/uptime', async (request, reply) => {
-	return reply.status(200).send({ uptime: process.uptime() });
-});
+app.all('/*', async (request, reply) => {
 
-app.all('/api/*', async (request, reply) => {
-	let hasBody = request.method !== 'DELETE' && request.method !== 'GET';
+	Log('INFO', `Request from ${request.ip} : ${request.url}`);
+
+	if (request.url.startsWith('/uptime')) {
+		reply.status(200).send({ uptime: process.uptime() });
+		return;
+	}
+
+	const hasBody = request.method !== 'DELETE' && request.method !== 'GET' && request.method !== 'HEAD';
 
 	try {
-		const result = await REST.makeRequest(request.method as RequestMethods, request.url.substring(4).replace('/api', ''), {
-			body: hasBody ? request.body : {}
+		const result = await REST.makeRequest(request.method as RequestMethods, request.url.slice(4), {
+			body: hasBody ? request.body : undefined
 		});
 
 		if (result) {
@@ -34,6 +38,6 @@ app.all('/api/*', async (request, reply) => {
 	}
 });
 
-app.listen({ port: config.REST_PORT }, () => {
-	console.log(`REST server listening on port ${config.REST_PORT} - ${config.REST_URL}:${config.REST_PORT}`);
+app.listen({ host: config. REST_URL, port: config.REST_PORT }, () => {
+	Log('INFO', `REST server listening on port ${config.REST_PORT} - ${config.REST_URL}:${config.REST_PORT}`);
 });
