@@ -100,7 +100,11 @@ export default function (folder: string, client: Bot) {
 		const file = EventFiles[i];
 		if (!file.endsWith('.js')) continue;
 
-		const event = require(file).default as Function | EventFile;
+		let event = require(file) as Function | EventFile | { default: Function | EventFile };
+		if ('default' in event) {
+			event = event.default;
+		}
+
 		if (typeof event === 'function') {
 			const eventName = file.split('/').pop()!.split('.').shift()!;
 			Events[eventName] = event;
