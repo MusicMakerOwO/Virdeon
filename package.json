@@ -19,6 +19,7 @@
     "@discordjs/builders": "^1.10.1",
     "@fastify/multipart": "^9.0.3",
     "discordeno": "^21.0.0",
+    "esbuild": "^0.25.0",
     "fastify": "^5.2.1",
     "fetch": "^1.1.0",
     "source-map-support": "^0.5.21"
