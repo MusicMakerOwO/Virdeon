@@ -13,9 +13,8 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 	const files = ReadFolder(`${__dirname}/../${folder}`);
 	for (const file of files) {
 		if (!file.endsWith('.js')) continue;
-		let component = require(file) as CommandFile | ComponentFile | MessageFile;
-		// @ts-ignore
-		if (component.default !== undefined) component = component.default;
+		let component = require(file) as CommandFile | ComponentFile | MessageFile | { default: CommandFile | ComponentFile | MessageFile };
+		if ('default' in component) component = component.default;
 
 		try {
 			if (typeof component !== 'object') throw 'Component must be an object';
