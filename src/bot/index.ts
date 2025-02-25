@@ -211,3 +211,13 @@ app.listen({ host: config.BOT_URL, port: config.BOT_PORT }, () => {
 });
 
 client.start();
+
+process.on('SIGINT', async () => {
+	Log('INFO', 'Shutting down bot server...');
+	await client.shutdown();
+
+	Log('INFO', 'Shutting down Fastify server...');
+	await app.close();
+
+	process.exit(0);
+})

@@ -1,7 +1,7 @@
 import config from "../Config"
 import { createRestManager, RequestMethods } from "discordeno";
 import Log from "../GlobalUtils/Logs";
-import { BindTokenCheck, CreateFastifyServer } from "../GlobalUtils/Fastify";
+import { BindServerShutdown, BindTokenCheck, CreateFastifyServer } from "../GlobalUtils/Fastify";
 
 const REST = createRestManager({
 	token: config.TOKEN
@@ -10,6 +10,7 @@ const REST = createRestManager({
 const app = CreateFastifyServer();
 
 BindTokenCheck(app);
+BindServerShutdown(app);
 
 app.all('/*', async (request, reply) => {
 

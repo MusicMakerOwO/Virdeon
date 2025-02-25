@@ -1,6 +1,6 @@
 import { createGatewayManager, createRestManager, GatewayIntents, type GatewayManager } from "discordeno";
 import config from "../Config";
-import { BindTokenCheck, CreateFastifyServer } from "../GlobalUtils/Fastify";
+import { BindServerShutdown, BindTokenCheck, CreateFastifyServer } from "../GlobalUtils/Fastify";
 import Log from "../GlobalUtils/Logs";
 
 const REST = createRestManager({
@@ -32,6 +32,7 @@ export async function getGateway() : Promise<GatewayManager> {
 
 const app = CreateFastifyServer();
 BindTokenCheck(app);
+BindServerShutdown(app);
 
 app.all('/*', async (request, reply) => {
 

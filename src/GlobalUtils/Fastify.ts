@@ -11,12 +11,6 @@ export function CreateFastifyServer(options?: FastifyServerOptions) {
 
 	app.register(fastifyMultipart, { attachFieldsToBody: true });
 
-	process.on('SIGINT', async () => {
-		Log('INFO', 'Shutting down Fastify server...');
-		await app.close();
-		process.exit(0);
-	});
-
 	return app;
 }
 
@@ -26,5 +20,12 @@ export function BindTokenCheck(app: FastifyInstance) {
 			Log('INFO', `Invalid request from ${request.ip}`);
 			reply.status(401).send({ error: 'Unauthorized' });
 		}
+	});
+}
+
+export function BindServerShutdown(app: FastifyInstance) {
+	process.on('SIGINT', async () => {
+		Log('INFO', 'Shutting down Fastify server...');
+		await app.close();
 	});
 }
