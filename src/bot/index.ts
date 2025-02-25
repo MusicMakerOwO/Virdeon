@@ -189,7 +189,7 @@ client.events.ready = () => {
 
 	// Any edits get compiled on the fly
 	// The runtime hot reload will then apply the new edits
-	const TSWatcher = new FolderWatcher(`${__dirname}/../../src`);
+	const TSWatcher = new FolderWatcher(`${__dirname}/../../src/bot`);
 	TSWatcher.onChange = CompilerCallback;
 	TSWatcher.onRemove = CompilerCallback;
 	TSWatcher.onAdd = CompilerCallback;
