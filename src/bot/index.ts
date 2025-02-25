@@ -121,7 +121,8 @@ async function CompileTS(filePath: string) {
 
 		Log('INFO', `Compiled ${CleanPath(filePath)} to ${CleanPath(outputPath)}`);
 	} catch (error) {
-		Log('ERROR', error);
+		// eat the error, esbuild is weird and prints it to console anyways
+		// If there is an error it completely escapes this try-catch block ._.
 	}
 }
 
