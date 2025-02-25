@@ -1,18 +1,18 @@
 import config from "../../Config";
-import { Client } from "../../types";
+import { CommandFile } from "../../types";
 import Log from "../../GlobalUtils/Logs";
 import type { RESTPostAPIApplicationCommandsJSONBody } from "discord-api-types/v10";
 
 const PUBLIC_ROUTE = `https://discord.com/api/v10/applications/${config.APP_ID}/commands`;
 
-export default async function RegisterCommands(client: Client, silent = false) {
+export default async function RegisterCommands(cache: Map<string, CommandFile>, silent = false) {
 
 	if (!silent) Log('INFO', 'Registering (/) commands...');
 
 	const commandNames = new Set<string>();
 	const PublicCommands : RESTPostAPIApplicationCommandsJSONBody[] = [];
 
-	const localCommands = [...client.commands.values()];
+	const localCommands = [...cache.values()];
 	for (let i = 0; i < localCommands.length; i++) {
 		const command = localCommands[i];
 		const commandData = command.command.toJSON();

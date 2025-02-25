@@ -70,7 +70,7 @@ for (const [folder, name] of Object.entries(COMPONENT_NAMES)) {
 	ComponentLoader(name, folder, COMPONENT_CACHE[folder as keyof typeof COMPONENT_CACHE]);
 }
 
-RegisterCommands(client);
+RegisterCommands(client.commands);
 
 const app = CreateFastifyServer();
 BindTokenCheck(app);
@@ -177,8 +177,8 @@ async function HotReload(folder: keyof typeof COMPONENT_NAMES, filePath: string)
 	}
 
 	if (needsRegister) {
-		await RegisterCommands(client);
-		// Log('INFO', `Command "/${name}" has been updated`);
+		await RegisterCommands(client.commands, true);
+		Log('INFO', `Command "/${name}" has been updated`);
 	}
 
 
