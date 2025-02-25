@@ -10,7 +10,8 @@
     "start:bot": "node build/bot/index.js",
     "start:rest": "node build/rest/index.js",
     "start:gateway": "node build/gateway/index.js",
-    "linecount": "find ./src -name '*.*' -type f -exec cat {} + | wc -l"
+    "linecount": "find ./src -name '*.*' -type f -exec cat {} + | wc -l",
+	"register": "node build/register.js"
   },
   "keywords": [],
   "author": "",

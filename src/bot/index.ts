@@ -70,8 +70,6 @@ for (const [folder, name] of Object.entries(COMPONENT_NAMES)) {
 	ComponentLoader(name, folder, COMPONENT_CACHE[folder as keyof typeof COMPONENT_CACHE]);
 }
 
-RegisterCommands(client.commands);
-
 const app = CreateFastifyServer();
 BindTokenCheck(app);
 
@@ -127,7 +125,6 @@ async function CompileTS(filePath: string) {
 }
 
 // JS runtime after compiliation
-// @ts-ignore
 async function HotReload(folder: keyof typeof COMPONENT_NAMES, filePath: string) {
 
 	const start = process.hrtime.bigint();
