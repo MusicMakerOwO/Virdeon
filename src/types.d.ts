@@ -3,6 +3,7 @@ import { Bot, Interaction, InteractionCallbackData, Message } from "discordeno";
 
 type ComponentResponse = string | InteractionCallbackData & { hidden?: boolean };
 
+// Order does matter, that is determined at runtime, use whatever you want
 type ComponentCallback<T1, T2, T3 = null> = (x?: (T1 | T2 | T3), y?: (T1 | T2 | T3), z?: (T1 | T2 | T3)) => ComponentResponse | Promise<ComponentResponse>;
 
 type ComponentLocks = {
@@ -12,24 +13,18 @@ type ComponentLocks = {
 
 // Buttons, select menus, modals
 export interface ComponentFile {
-	// One of these is required
-	// Let the user decide which they prefer
-	customID?: string;
-	customId?: string;
-	custom_id?: string;
-
+	customID: string;
+	filePath?: string; // set at runtime with the component loader
 	locks?: Partial<ComponentLocks>;
-	// interaction, client, args
-	// order does not matter
 	execute: ComponentCallback<Client, Interaction, string[]>;
 }
 
 // Slash commands, autocompletes, context menus
 export interface CommandFile {
+	customID?: string, // set at runtime with the component loader, it's just the command name
+	filePath?: string;
 	command: SlashCommandBuilder | ContextMenuCommandBuilder;
 	locks?: Partial<ComponentLocks>;
-	// interaction, client
-	// order does not matter
 	execute: ComponentCallback<Client, Interaction>;
 }
 

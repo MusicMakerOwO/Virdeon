@@ -137,18 +137,12 @@ async function HotReload(folder: keyof typeof COMPONENT_NAMES, filePath: string)
 		component = component.default;
 	}
 
-	const name : string = 
-		( component.customID ?? component.customId ?? component.custom_id ) ??
-		component.command?.name ??
-		component.name
+	const name : string = component.customID!;
 
 	const oldComponent = cache.get(name);
 
-	// Clear the cache, prepare to load everything again
-	const filePaths = ReadFolder(`${__dirname}/${folder}`);
-	for (let i = 0; i < filePaths.length; i++) {
-		delete require.cache[ require.resolve( filePaths[i] ) ];
-	}
+	// clear the require cache in preparation for the new file content
+	delete require.cache[ require.resolve( filePath ) ];
 
 	cache.clear();
 
@@ -178,8 +172,6 @@ async function HotReload(folder: keyof typeof COMPONENT_NAMES, filePath: string)
 		await RegisterCommands(client.commands, true);
 		Log('INFO', `Command "/${name}" has been updated`);
 	}
-
-
 }
 
 client.events.ready = () => {
