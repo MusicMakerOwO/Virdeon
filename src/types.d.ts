@@ -33,13 +33,6 @@ export interface CommandFile {
 	execute: ComponentCallback<Client, Interaction>;
 }
 
-export interface MessageFile {
-	name: string;
-	description?: string;
-	locks?: Partial<ComponentLocks>;
-	execute: ComponentCallback<Client, Message, string[]>;
-}
-
 export interface EventFile {
 	name: string;
 	execute: (...args: any[]) => void | Promise<void>;
@@ -50,5 +43,4 @@ export interface Client extends Bot {
 	buttons: Map<string, ComponentFile>;
 	selects: Map<string, ComponentFile>;
 	modals: Map<string, ComponentFile>;
-	prefix: Map<string, MessageFile>;
 }

@@ -1,7 +1,6 @@
 type Config = {
 	TOKEN: string,
 	APP_ID: string,
-	PREFIX: string,
 	
 	REST_URL: string,
 	REST_PORT: number,
@@ -16,7 +15,6 @@ type Config = {
 const ConfigTemplate : Record<string, string> = {
 	TOKEN: 'string',
 	APP_ID: 'string',
-	PREFIX: 'string',
 	REST_URL: 'string',
 	REST_PORT: 'number',
 	GATEWAY_URL: 'string',
