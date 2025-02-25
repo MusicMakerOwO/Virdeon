@@ -9,7 +9,8 @@
     "start": "echo You must specify what to start - ex. start:bot or start:rest",
     "start:bot": "node build/bot/index.js",
     "start:rest": "node build/rest/index.js",
-    "start:gateway": "node build/gateway/index.js"
+    "start:gateway": "node build/gateway/index.js",
+    "linecount": "find ./src -name '*.*' -type f -exec cat {} + | wc -l"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "esbuild": "^0.25.0",
     "fastify": "^5.2.1",
     "fetch": "^1.1.0",
+    "jsonc-require": "^1.0.1",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
