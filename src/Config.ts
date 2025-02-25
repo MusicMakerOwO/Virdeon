@@ -1,3 +1,7 @@
+// JSONC allows for a more user friendly interface
+// Comments, trailing commas, and unquoted keys are all allowed
+import "jsonc-require";
+
 type Config = {
 	TOKEN: string,
 	APP_ID: string,
@@ -23,7 +27,7 @@ const ConfigTemplate : Record<string, string> = {
 	BOT_PORT: 'number'
 }
 
-const config = require('../config.json');
+const config = require('../config.jsonc');
 
 for (const [key, type] of Object.entries(ConfigTemplate)) {
 	if (typeof config[key] !== type) {
