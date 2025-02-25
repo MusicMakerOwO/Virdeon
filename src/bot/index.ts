@@ -1,19 +1,18 @@
 // Converts all runtime errors to point to original typescript files
 import 'source-map-support/register';
 
+import { existsSync } from 'node:fs';
 import { createBot, Intents } from "discordeno";
+import { build } from 'esbuild';
 import EventLoader from "./Utils/EventLoader";
 import ComponentLoader from "./Utils/ComponentLoader";
-import config from "../Config";
-import { Client, CommandFile } from "../types";
-import { BindTokenCheck, CreateFastifyServer } from '../GlobalUtils/Fastify';
-import Log from '../GlobalUtils/Logs';
 import { FolderWatcher } from './Utils/FolderWatcher';
-import { build } from 'esbuild';
-import Debounce from '../GlobalUtils/Debounce';
-import ReadFolder from '../GlobalUtils/ReadFolder';
-import { existsSync } from 'fs';
 import RegisterCommands from './Utils/RegisterCommands';
+import { BindTokenCheck, CreateFastifyServer } from '../GlobalUtils/Fastify';
+import Debounce from '../GlobalUtils/Debounce';
+import Log from '../GlobalUtils/Logs';
+import { Client, CommandFile } from "../types";
+import config from "../Config";
 
 const client = createBot({
 	token: config.TOKEN,
