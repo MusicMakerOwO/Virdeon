@@ -1,0 +1,13 @@
+{
+	"TOKEN": "",
+	"APP_ID": "",
+
+	"REST_URL": "localhost",
+	"REST_PORT": 3000,
+
+	"GATEWAY_URL": "localhost",
+	"GATEWAY_PORT": 3001,
+
+	"BOT_URL": "https://localhost",
+	"BOT_PORT": 3002
+}
