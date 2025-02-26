@@ -1,5 +1,3 @@
-// [TYPE] YYYY-MM-DD HH-MM-SS : message
-
 import { inspect } from "node:util";
 
 export enum COLOR {
