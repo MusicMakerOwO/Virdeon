@@ -23,8 +23,7 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 			if (typeof component.locks !== 'object') component.locks = {};
 			if (typeof component.execute !== 'function') throw 'Component must have an execute function';
 
-			let key: string;
-			let value: CommandFile | ComponentFile;
+			let key: string, value: CommandFile | ComponentFile;
 
 			if ('command' in component) {
 				if (typeof component.command !== 'object') throw 'Command must be an object';
@@ -38,10 +37,7 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 				value = component;
 			}
 
-			value = Object.defineProperty(value, 'filePath', { value: file });
-			value = Object.defineProperty(value, 'customID', { value: key });
-
-			cache.set(key, value);
+			cache.set(key, { ...value, filePath: file, customID: key });
 		} catch (error) {
 			Log('ERROR', `Error loading ${type} from ${file}: ${error}`);
 		}

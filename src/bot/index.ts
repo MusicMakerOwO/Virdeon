@@ -132,9 +132,7 @@ async function HotReload(folder: keyof typeof COMPONENT_NAMES, filePath: string)
 	const componentName = COMPONENT_NAMES[folder];
 
 	let component = require(filePath);
-	if ('default' in component) {
-		component = component.default;
-	}
+	if ('default' in component) component = component.default;
 
 	const name : string = component.customID!;
 

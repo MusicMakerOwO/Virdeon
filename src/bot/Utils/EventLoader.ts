@@ -2,6 +2,7 @@ import { Bot } from "discordeno";
 import ReadFolder from "../../GlobalUtils/ReadFolder";
 import { EventFile } from "../../types";
 import RunNamedParams from "./RunNamedParams";
+import Log from "../../GlobalUtils/Logs";
 
 const EventArgs: Record<string, string[]> = {
 	debug: ['text', 'args'],
@@ -92,28 +93,23 @@ function EventHandler(client: Bot, event: string, ...args: any[]) {
 }
 
 export default function (folder: string, client: Bot) {
-
-	const EventCallback = EventHandler.bind(null, client);
-
 	const EventFiles = ReadFolder(`${__dirname}/../${folder}`);
 	for (let i = 0; i < EventFiles.length; i++) {
 		const file = EventFiles[i];
 		if (!file.endsWith('.js')) continue;
 
 		let event = require(file) as Function | EventFile | { default: Function | EventFile };
-		if ('default' in event) {
-			event = event.default;
+		if ('default' in event) event = event.default;
+
+		if (typeof event !== 'object') {
+			Log('ERROR', `Event "${file}" is not an object`);
+			continue;
 		}
 
-		if (typeof event === 'function') {
-			const eventName = file.split('/').pop()!.split('.').shift()!;
-			Events[eventName] = event;
-		} else if (typeof event === 'object') {
-			Events[event.name] = event.execute;
-		}
+		Events[event.name] = event.execute;
 	}
 
 	for (const eventName of Object.keys(Events as Bot['events'])) {
-		Object.defineProperty(client.events, eventName, { value: EventCallback.bind(null, eventName) });
+		Object.defineProperty(client.events, eventName, { value: EventHandler.bind(null, client, eventName) });
 	}
 }

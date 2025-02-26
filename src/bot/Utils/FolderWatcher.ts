@@ -54,7 +54,6 @@ export class FolderWatcher {
 		}
 		return ItemType.UNKNOWN;
 	}
-	
 
 	private Add (file: string) {
 
@@ -99,7 +98,6 @@ export class FolderWatcher {
 			}
 		}
 	}
-	
 
 	public addWatcher (path: string) {
 		if (this.watchers.has(path)) return;
