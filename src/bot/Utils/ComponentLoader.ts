@@ -37,7 +37,12 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 				value = component;
 			}
 
-			cache.set(key, { ...value, filePath: file, customID: key });
+			value = Object.defineProperties(value, {
+				'filePath': { value: file },
+				'customID': { value: key }
+			});
+
+			cache.set(key, value);
 		} catch (error) {
 			Log('ERROR', `Error loading ${type} from ${file}: ${error}`);
 		}
