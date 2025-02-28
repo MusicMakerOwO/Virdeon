@@ -1,6 +1,5 @@
 import fs from 'node:fs';
-// const fs = require('node:fs');
-// const Log = require('./Logs');
+import Log from './Logs';
 
 const files: string[] = []; // string[] of paths
 const driveLetterRegex = /^[A-Z]:\\/i;
@@ -21,8 +20,11 @@ function ReadFolder(path: string, depth = 3) {
 		const fullPath = `${path}/${entry.name}`;
 
 		if (entry.isDirectory()) {
-			if (depth <= 0) return console.warn(`Maximum depth reached - Skipping ${fullPath}`);
-			ReadFolder(fullPath, depth - 1);
+			if (depth <= 0) {
+				Log('WARN', `Maximum depth reached - Skipping ${fullPath}`);
+			} else {
+				ReadFolder(fullPath, depth - 1);
+			}
 			continue;
 		}
 
