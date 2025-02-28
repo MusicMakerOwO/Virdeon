@@ -3,9 +3,9 @@ import fs from 'node:fs';
 // const Log = require('./Logs');
 
 const files: string[] = []; // string[] of paths
+const driveLetterRegex = /^[A-Z]:\\/i;
 
 export default function (path: string, depth = 3) {
-	const driveLetterRegex = /^[A-Z]:\\/i;
 	if (!path.startsWith('/') && !driveLetterRegex.test(path)) throw new Error(`Path must be absolute - Received ${path}`);
 	if (path.endsWith('/')) path = path.slice(0, -1);
 	files.length = 0;
