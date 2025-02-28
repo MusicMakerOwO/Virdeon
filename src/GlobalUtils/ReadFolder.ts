@@ -5,7 +5,8 @@ import fs from 'node:fs';
 const files: string[] = []; // string[] of paths
 
 export default function (path: string, depth = 3) {
-	if (!path.startsWith('/') && !path.startsWith('C:\\')) throw new Error(`Path must be absolute - Received ${path}`);
+	const driveLetterRegex = /^[A-Z]:\\/i;
+	if (!path.startsWith('/') && !driveLetterRegex.test(path)) throw new Error(`Path must be absolute - Received ${path}`);
 	if (path.endsWith('/')) path = path.slice(0, -1);
 	files.length = 0;
 	ReadFolder(path, depth);
