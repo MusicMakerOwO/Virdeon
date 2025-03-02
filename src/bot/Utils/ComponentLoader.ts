@@ -48,5 +48,7 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 		}
 	}
 
-	if (!silent) Log('INFO', `Loaded ${files.length} ${type}s`);
+
+	if (!silent) Log('INFO', `Loaded ${files.length} ${type}`);
+
 }
