@@ -37,10 +37,10 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 				value = component;
 			}
 
-			value = Object.defineProperties(value, {
-				'filePath': { value: file },
-				'customID': { value: key }
-			});
+			if (!Object.prototype.hasOwnProperty.call(value, 'customID')) {
+			    Object.defineProperty(value, 'customID', { value: key });
+			}
+			Object.defineProperty(value, 'filePath', { value: file });
 
 			cache.set(key, value);
 		} catch (error) {
@@ -48,5 +48,7 @@ export default function (type: string, folder: string, cache: Map<string, Comman
 		}
 	}
 
+
 	if (!silent) Log('INFO', `Loaded ${files.length} ${type}`);
+
 }
